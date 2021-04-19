@@ -25,10 +25,10 @@ The data analysed here was downloaded from http://insideairbnb.com/get-the-data.
 ## File Descriptions<a name="files"></a>
 The repository contains the following files:
 
-* `project_1_calendar.ipybn` - Jupyter notebook of the analysis of the calendar data
-* `project_1_calendar.ipybn` - Jupyter notebook of the analysis of the listings data following the CRISP-DM process
+* `1_listings.ipybn` - Jupyter notebook of the analysis of the calendar data
+* `2_calendar.ipybn` - Jupyter notebook of the analysis of the listings data following the CRISP-DM process
 * Images - folder with images
 
 ## Results<a name="results"></a>
-The main findings have been summarised in the blog post [here](https://medium.com/p/56a22082ef6e/).
+The main findings have been summarised in the blog post [here](https://katya-saintamand.medium.com/how-to-maximise-your-profits-from-airbnb-rentals-in-edinburgh-56a22082ef6e).
 
