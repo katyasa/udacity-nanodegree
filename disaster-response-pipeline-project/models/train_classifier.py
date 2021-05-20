@@ -1,6 +1,5 @@
 import sys
 
-import sqlite3
 import pandas as pd
 import numpy as np
 import pickle
@@ -24,6 +23,10 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import GridSearchCV
 
 def load_data(database_filepath):
+    '''Loads data from database into dataframe. Returns feature variable X 
+    (data frame of messages) and target variable y (dataframe of message 
+                                                    categories)'''
+    
     engine = create_engine('sqlite:///' + database_filepath)
     table_name='DisasterResponse'
     df = pd.read_sql(table_name, con=engine)
@@ -42,9 +45,12 @@ def load_data(database_filepath):
              ]
     
     y = df[categories]
-    return X, y, categories
+    return X, y
 
 def tokenize(text):
+    '''Takes as input text, tokenizes the text, removes stop words, lemmatises
+    them and returns a list of lemma tokens'''
+    
     stopwords_en = stopwords.words('english')
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
@@ -59,6 +65,10 @@ def tokenize(text):
 
 
 def build_model():
+    
+    ''' Builds machine learning pipeline of a vectoriser and random forest
+    classifier, and returns best estimator of grid search'''   
+    
     rfc_pipeline = Pipeline([
         ('vect', TfidfVectorizer(tokenizer=tokenize)),
         ('rfc', MultiOutputClassifier(RandomForestClassifier()))
@@ -79,6 +89,9 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    '''Evaluates the model prints F1 score for each category and a mean F1 
+    score across all categories'''
+    
     y_pred = model.predict(X_test)
     y_pred_df = pd.DataFrame(data=y_pred,columns=Y_test.columns)
     #score = f1_score(y_test,y_pred, average='micro')
@@ -95,6 +108,8 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    '''Saves the model to pickle file'''
+    
     # save model
     pickle.dump(model, open(model_filepath, 'wb'))
 
