@@ -1,6 +1,5 @@
-import sys, sqlite3
+import sys
 import pandas as pd
-import numpy as np
 from sqlalchemy import create_engine
 
 
@@ -13,6 +12,10 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    '''Reads in a dataframe and returns a cleaned up dataframe:
+        categories are binary fields
+        duplicates get dropped'''
+    
     # create a dataframe of the 36 individual category columns
     categories = df['categories'].str.split(";",expand=True)
     categories.head()
@@ -49,6 +52,7 @@ def clean_data(df):
     return df
 
 def save_data(df, database_filename):
+    '''Saves dataframe to a SQLite database'''
 
     engine = create_engine('sqlite:///DisasterResponse.db')
     df.to_sql(database_filename, engine, index=False)
