@@ -11,8 +11,30 @@
 You will need the standard data science libraries like pandas, numpy, NLTK and scikit learn to run the  project. For the visualisations, installing plotly will be necessary. 
 
 ## Project Motivation <a name="motivation"></a>
+Following a disaster, there could be millions of communications (on social media or directly sent to the disaster response agencies) where only a few will be relevant to the disaster response organisations. To direct the message to the relevant organisation, we need to understand what the message is about: e.g., water, medical supplies, electricity, infrastructure. This is what this project tries to achieve. 
 
-### Instructions:
+## Dataset 
+The data sources are `messages.csv` and `categories.csv`, compiled and prepared by FigureEight for Machine Learning tasks. 
+
+## Project Components
+
+1. ETL Pipeline
+    - Loads `messages.csv` and `categories.csv` datasets
+    - Merges the two datasets
+    - Cleans the data
+    - Stores the cleaned data in a SQLite database
+
+2. Machine Learning Pipeline
+    - Loads data from the SQLite database
+    - Splits the dataset into training and test sets
+    - Builds a text processing and machine learning pipeline
+    - Trains and tunes a model using GridSearchCV
+    - Outputs results on the test set
+    - Exports the tuned model as a pickle file
+
+3. Flask Web App
+
+## How to Run the Project
 1. Run the following commands in the project's root directory to set up your database and model.
 
     - To run ETL pipeline that cleans data and stores in database
