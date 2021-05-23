@@ -1,5 +1,17 @@
 # Disaster Response Pipeline Project
 
+### Table of Contents
+1. [Installation](#installation)
+2. [Project Motivation](#motivation)
+3. [Data](#data)
+4. [File Descriptions](#files)
+5. [Results](#results)
+
+## Installation <a name="installation"></a>
+You will need the standard data science libraries like pandas, numpy, NLTK and scikit learn to run the  project. For the visualisations, installing plotly will be necessary. 
+
+## Project Motivation <a name="motivation"></a>
+
 ### Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
 
