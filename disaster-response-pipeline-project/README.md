@@ -4,7 +4,7 @@
 1. [Installation](#installation)
 2. [Project Motivation](#motivation)
 3. [Data](#data)
-4. [Project Components](#project components)
+4. [Project Components](#project_components)
 5. [How to Run the Project](#run)
 
 ## Installation <a name="installation"></a>
@@ -16,7 +16,7 @@ Following a disaster, there could be millions of communications (on social media
 ## Dataset <a name="data"></a>
 The data sources are `messages.csv` and `categories.csv`, compiled and prepared by FigureEight for Machine Learning tasks. 
 
-## Project Components <a name="project components"></a>
+## Project Components <a name="project_components"></a>
 
 1. ETL Pipeline
     - Loads `messages.csv` and `categories.csv` datasets
