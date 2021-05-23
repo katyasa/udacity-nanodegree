@@ -1,3 +1,5 @@
+#run in the terminal to start the webapp
+
 import json
 import plotly
 import pandas as pd
@@ -8,7 +10,7 @@ from nltk.tokenize import word_tokenize
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
-from sklearn.externals import joblib
+import joblib
 from sqlalchemy import create_engine
 
 
@@ -26,11 +28,11 @@ def tokenize(text):
     return clean_tokens
 
 # load data
-engine = create_engine('sqlite:///../data/YourDatabaseName.db')
-df = pd.read_sql_table('YourTableName', engine)
+engine = create_engine('sqlite:///../data/DisasterResponse.db')
+df = pd.read_sql_table('disaster_response_messages', engine)
 
 # load model
-model = joblib.load("../models/your_model_name.pkl")
+model = joblib.load("../models/classifier.pkl")
 
 
 # index webpage displays cool visuals and receives user input text for model
@@ -42,6 +44,9 @@ def index():
     # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
+    
+    category_counts = df.iloc[:,4:].sum().sort_values(ascending=False)
+    category_names = list(category_counts.index)
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -55,6 +60,12 @@ def index():
             ],
 
             'layout': {
+                
+                'font' : {
+                        #'family' : 'Courier New, monospace', 
+                        'size' : 15,
+                        }, 
+                
                 'title': 'Distribution of Message Genres',
                 'yaxis': {
                     'title': "Count"
@@ -63,7 +74,37 @@ def index():
                     'title': "Genre"
                 }
             }
+        },
+        
+        {
+            'data': [
+                Bar(
+                    x=category_names,
+                    y=category_counts, 
+                  
+                )
+            ],
+
+            'layout': {
+                                
+                'font' : {
+                        #'family' : 'Courier New, monospace', 
+                        'size' : 12,
+                        }, 
+                
+                'title': 'Distribution of Message Categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Message Category", 
+                    'tickangle' : -45, 
+                    'tickcolor' : 'magenta',
+                }
+            }
         }
+                
+                
     ]
     
     # encode plotly graphs in JSON
@@ -93,8 +134,8 @@ def go():
 
 
 def main():
-    app.run(host='0.0.0.0', port=3001, debug=True)
-
+    app.run(host='127.0.0.1', port=3001, debug=True)
+    
 
 if __name__ == '__main__':
     main()

@@ -4,7 +4,8 @@ from sqlalchemy import create_engine
 
 
 def load_data(messages_filepath, categories_filepath):
-    '''Reads csv files and loads to pandas dataframes'''
+    '''Reads categories and messages csv files, 
+    merges them and loads to pandas dataframes'''
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     df = messages.merge(categories,on='id')
@@ -54,8 +55,8 @@ def clean_data(df):
 def save_data(df, database_filename):
     '''Saves dataframe to a SQLite database'''
 
-    engine = create_engine('sqlite:///DisasterResponse.db')
-    df.to_sql(database_filename, engine, index=False)
+    engine = create_engine('sqlite:///./'+ str (database_filename))
+    df.to_sql('disaster_response_messages', engine, index=False, if_exists='replace')
 
 
 def main():

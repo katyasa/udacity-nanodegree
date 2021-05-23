@@ -12,7 +12,7 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
 from sklearn.pipeline import Pipeline
-from sklearn.metrics import confusion_matrix, accuracy_score, classification_report, f1_score, average_precision_score    
+from sklearn.metrics import confusion_matrix, accuracy_score, classification_report, f1_score, precision_score, recall_score    
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier,AdaBoostClassifier
@@ -24,13 +24,13 @@ from sklearn.model_selection import GridSearchCV
 
 def load_data(database_filepath):
     '''Loads data from database into dataframe. Returns feature variable X 
-    (data frame of messages) and target variable y (dataframe of message 
-                                                    categories)'''
+    (data frame of messages), target variable y (dataframe of message 
+    categories) and message categories'''
     
-    engine = create_engine('sqlite:///' + database_filepath)
-    table_name='DisasterResponse'
+    engine = create_engine('sqlite:///' + str(database_filepath))
+    table_name='disaster_response_messages'
     df = pd.read_sql(table_name, con=engine)
-
+    
     X = df['message']
 
     categories = ['related', 'request', 'offer', 'aid_related', 
@@ -45,7 +45,7 @@ def load_data(database_filepath):
              ]
     
     y = df[categories]
-    return X, y
+    return X, y, categories
 
 def tokenize(text):
     '''Takes as input text, tokenizes the text, removes stop words, lemmatises
@@ -74,10 +74,10 @@ def build_model():
         ('rfc', MultiOutputClassifier(RandomForestClassifier()))
         ])
     
-    rfc_parameters = {  'rfc__estimator__max_depth': [2, 3, 4],
-                    'rfc__estimator__criterion' : ['gini', 'entropy'], 
-                    'rfc__estimator__max_features' : ['auto', 'sqrt', 'log2'],
-                    'rfc__estimator__class_weight' : ['balanced', 'balanced_subsample'],
+    rfc_parameters= { 'rfc__estimator__max_depth': [2, 3, 4],
+                       'rfc__estimator__criterion' : ['gini', 'entropy'],  
+                       'rfc__estimator__max_features' : ['auto', 'sqrt', 'log2'],
+                       'rfc__estimator__class_weight' : ['balanced', 'balanced_subsample'],
               }
 
     rfc_cv = GridSearchCV(estimator=rfc_pipeline, 
@@ -97,11 +97,23 @@ def evaluate_model(model, X_test, Y_test, category_names):
     #score = f1_score(y_test,y_pred, average='micro')
     f1_scores = list()
     for i in range(Y_test.shape[1]):
-        print("F1 score for each category")
-        print("===========================================================")
+        print(Y_test.columns[i])
+        print("f1 score")
         f1 = f1_score(Y_test.iloc[:,i],y_pred_df.iloc[:,i],average='micro')
         print(f1)
         f1_scores.append(f1)
+        print("===========================================================")
+
+        print('precision score')
+        precision = precision_score(Y_test.iloc[:,i],y_pred_df.iloc[:,i],average='weighted') 
+        print(precision)
+        print("===========================================================")
+    
+        print('recall score')
+        recall = recall_score(Y_test.iloc[:,i],y_pred_df.iloc[:,i],average='weighted') 
+        print(recall)
+        print("===========================================================")
+    
     print("===========================================================")
     print("Total mean F1 for all categories")    
     print(np.mean(f1_scores)) 
