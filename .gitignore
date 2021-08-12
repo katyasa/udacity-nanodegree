@@ -3,6 +3,13 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Stuff I don't care about
+*.png
+*.pkl
+*.json
+*.pdf
+*.jpg
+
 # C extensions
 *.so
 
