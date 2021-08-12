@@ -14,14 +14,14 @@ Predicting churn is a fairly common task data scientists have to solve, and Spar
 the problem when dealing with large datasets.
 
 ## Data<a name="data"></a>
-The classification here is based on a small dataset provided by Udacity (mini_sparkify_event_data.json) which contains logs of 255 users. 
+The classification here is based on a small dataset provided by Udacity (`mini_sparkify_event_data.json`) which contains logs of 255 users. 
 
 ## File Descriptions<a name="files"></a>
 The repository contains the following files:
 
 * `Sparkify.ipybn` - Jupyter notebook of the classification task using a small data set. It includes data loading, cleaning, data exploration, feature engineering, 
 data modelling, evaluation, hyperparameter optimisation and feature importances. 
-* `Sparkify_emr.ipybn` - Jupyter notebook of the classification task using the full (12GB) data set. It includes all as above but data exploration.
+* `Sparkify_emr.ipybn` - Jupyter notebook of the classification task using the full (12GB) data set (`s3n://udacity-dsnd/sparkify/sparkify_event_data.json`). It includes all as above but data exploration.
 
 ## Results<a name="results"></a>
-The main findings have been summarised in the blog post [here](https://katya-saintamand.medium.com/).
+The main findings have been summarised in the blog post [here](https://katya-saintamand.medium.com/using-pyspark-for-predicting-churn-df4cee2f4618).
