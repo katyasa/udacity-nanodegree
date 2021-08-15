@@ -23,5 +23,5 @@ The repository contains the following files:
 data modelling, evaluation, hyperparameter optimisation and feature importances. 
 * `Sparkify_emr.ipybn` - Jupyter notebook of the classification task using the full (12GB) data set (`s3n://udacity-dsnd/sparkify/sparkify_event_data.json`). It includes all as above but data exploration.
 
-## Results<a name="results"></a>
+## Details<a name="results"></a>
 The main findings have been summarised in the blog post [here](https://katya-saintamand.medium.com/using-pyspark-for-predicting-churn-df4cee2f4618).
